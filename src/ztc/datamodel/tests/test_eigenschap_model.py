@@ -20,7 +20,8 @@ class EigenschapModelTests(TestCase):
             referentie_naar_eigenschap=referentie,
         )
 
-        self.assertRaises(ValidationError, eigenschap.clean)
+        with self.assertRaisesMessage(ValidationError, 'Één van twee groepen attributen is verplicht: specificatie van eigenschap of referentie naar eigenschap'):
+            eigenschap.clean()
 
     def test_model_raises_error_when_both_fields_are_not_set(self):
         eigenschap = EigenschapFactory.create(
@@ -28,7 +29,8 @@ class EigenschapModelTests(TestCase):
             referentie_naar_eigenschap=None,
         )
 
-        self.assertRaises(ValidationError, eigenschap.clean)
+        with self.assertRaisesMessage(ValidationError, 'Één van twee groepen attributen is verplicht: specificatie van eigenschap of referentie naar eigenschap'):
+            eigenschap.clean()
 
     def test_model_does_not_raise_an_error_when_only_specificatie_is_set(self):
         specificatie = EigenschapSpecificatieFactory.create()
@@ -37,7 +39,10 @@ class EigenschapModelTests(TestCase):
             specificatie_van_eigenschap=specificatie,
         )
 
-        self.assertIsNone(eigenschap.clean())
+        try:
+            eigenschap.clean()
+        except ValidationError:
+            self.fail("Should have validated")
 
     def test_model_does_not_raise_an_error_when_only_referentie_is_set(self):
         referentie = EigenschapReferentieFactory.create()
@@ -46,4 +51,7 @@ class EigenschapModelTests(TestCase):
             referentie_naar_eigenschap=referentie,
         )
 
-        self.assertIsNone(eigenschap.clean())
+        try:
+            eigenschap.clean()
+        except ValidationError:
+            self.fail("Should have validated")
