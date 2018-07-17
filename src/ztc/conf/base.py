@@ -372,8 +372,8 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
     #
     # # Filtering
-    'SEARCH_PARAM': 'zoek', # 'search',
-    'ORDERING_PARAM': 'sorteer', # 'ordering',
+    'SEARCH_PARAM': 'zoek',  # 'search',
+    'ORDERING_PARAM': 'sorteer',  # 'ordering',
     #
     # Versioning
     'DEFAULT_VERSION': '1',
@@ -460,6 +460,7 @@ SWAGGER_SETTINGS = {
     },
     # drf_yasg.inspectors.SwaggerAutoSchema
     'DEFAULT_AUTO_SCHEMA_CLASS': 'ztc.api.schema.AutoSchema',
+    'DEFAULT_INFO': 'ztc.api.info.info',
 }
 
 # Django-CORS-middleware
